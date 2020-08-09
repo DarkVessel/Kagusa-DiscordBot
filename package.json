@@ -1,20 +1,34 @@
 {
-  "name": "node-js-getting-started",
-  "version": "0.3.0",
-  "description": "A sample Node.js app using Express 4",
+  "name": "kagusa",
+  "version": "1.0.0",
+  "description": "Discord бот для заказчика Zlagger.",
+  "main": "index.js",
   "engines": {
     "node": "12.x"
   },
-  "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DarkVessel/Kagusa-DiscordBot.git"
+  },
   "keywords": [
-    "node",
-    "heroku",
-    "express"
+    "Discord",
+    "Bot",
+    "discord.js"
   ],
-  "license": "MIT"
+  "author": "Агент-Жора",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DarkVessel/Kagusa-DiscordBot/issues"
+  },
+  "homepage": "https://github.com/DarkVessel/Kagusa-DiscordBot#readme",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0",
+    "strftime": "^0.10.0",
+    "quick.db": "^7.1.1"
+  }
 }
