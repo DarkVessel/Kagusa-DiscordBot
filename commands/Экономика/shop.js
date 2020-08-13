@@ -1,4 +1,4 @@
-const { prefix, emojis } = require("../../config.js");
+const { prefix, emojis, shopSetAccess } = require("../../config.js");
 const { MessageEmbed } = require("discord.js");
 const { locale } = require("../../tools.js");
 const db = require("quick.db");
@@ -43,6 +43,7 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
             }).catch(() => send.error("При снятии роли произошла ошибка."));
             break;
         case "set":
+            if (!message.member.roles.cache.has(shopSetAccess)) return send.error("У вас недостаточно прав!")
             const roleS = message.mentions.roles.first() || guildRoles.get(args[1]) || guildRoles.find(r => "@" + r.name === args.slice(1, -1) || r.name === args.slice(1, -1));
             if (!args[1]) return send.error("Укажите роль!");
             if (!roleS) return send.error("Роль не найдена!");
@@ -53,6 +54,7 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
             await fs.writeFileSync('../../shopRoles.json', JSON.stringify(shopRoles, null, 4));
             send.ok(`Роль ${roleS} была добавлена в магазин!`)
         case "delete":
+            if (!message.member.roles.cache.has(shopSetAccess)) return send.error("У вас недостаточно прав!");
             const mention = message.mentions.roles.first(),
                 a = guildRoles.find(r => "@" + r.name === args.slice(1, -1) || r.name === args.slice(1, -1));
 
