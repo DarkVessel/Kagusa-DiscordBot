@@ -51,6 +51,6 @@ module.exports.run = (bot, message, args, { send }) => {
             msg.reactions.removeAll()
             embed.setTitle(`Вы ${!addCoins ? "проиграли" : "выиграли"} ${uts(!addCoins ? args[0] : addCoins, 'uts_pack.coins', true)}.`);
             embed.setColor(!addCoins ? 'RED' : "GREEN");
-        }
+        };
     });
 };
