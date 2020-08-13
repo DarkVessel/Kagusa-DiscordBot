@@ -53,8 +53,9 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
             if (!args[1]) return send.error("Укажите роль или позицию!");
             if (!roleS2) return send.error("Роль не найдена!");
             shopRoles.delete(shopRoles.find(r => r.id === roleS2.id));
+            const ping = message.guild.roles.cache.get(roleS2.id)
             await db.set(`shopRoles`, shopRoles);
-            send.ok(`Роль ${roleS2} была удалена из магазина!`)
+            send.ok(`Роль ${ping ? ping : `с ID **\`${roles2.id}\`**`} была удалена из магазина!`)
             break
         default:
             if (shopRoles.length === 0) return send.error("В магазине 0 ролей!");
