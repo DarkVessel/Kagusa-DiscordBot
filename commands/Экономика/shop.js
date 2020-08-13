@@ -74,10 +74,9 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
             shopRoles.forEach((r, i) => {
                 positions += `[${i + 1}] Роль:\n`;
                 roles += `<@&${r.id}>\n`;
-                coin += `| ${locale(r.coin)} <:tntmoney:525968032284147733>\n`
+                coin += `| ${locale(r.coin)} ${emojis.coins}\n`
             });
             const embedModel = new MessageEmbed()
-                .setColor("RED")
                 .setTitle("Магазин ролей.")
                 .setDescription(`Действие с товаром: **\`${prefix}shop buy/sell <Позиция>\`**`);
             const embeds = [
