@@ -38,10 +38,10 @@ if (!fs.existsSync(`./${commandFolder}/`)) {
         .forEach(folder => {
             try {
                 const path = `../${commandFolder}/${folder}`;
+                if (folder.endsWith(".js")) return;
                 const cmd = require(path);
-                if (folder.endsWith(".js")) check(cmd, folder, path);
+                check(cmd, folder, path);
             } catch (error) {
-                if (error.stack.includes("Error: Cannot find module")) return;
                 sendError(folder, error);
                 commandLoadingError++; commandLoading--;
                 console.error(error.stack);
