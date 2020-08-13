@@ -38,7 +38,7 @@ if (!fs.existsSync(`./${commandFolder}/`)) {
         .forEach(folder => {
             try {
                 const path = `../${commandFolder}/${folder}`;
-                if (folder.endsWith(".js")) return;
+                if (!folder.endsWith(".js")) return;
                 const cmd = require(path);
                 check(cmd, folder, path);
             } catch (error) {
