@@ -107,4 +107,6 @@ package-lock.json
 
 test.js
 
-shopRoles.json
+*shopRoles.json
+
+*json.sqlite
