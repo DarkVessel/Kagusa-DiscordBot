@@ -1,5 +1,5 @@
 const { prefix, emojis, shopSetAccess } = require("../../config.js");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, Emoji } = require("discord.js");
 const { locale } = require("../../tools.js");
 const db = require("quick.db");
 module.exports.run = async(bot, message, args, { send, guildRoles }) => {
@@ -77,7 +77,7 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
                     .addField(`Цена`, coin, true)
                     .setFooter(`Компьютерная версия.`, bot.user.displayAvatarURL()),
                 new MessageEmbed(embedModel)
-                    .addField(`Роли`, shopRoles.map((r, i) => `[${i + 1}] <@&${r.id}> | ${locale(r.coin)} <:tntmoney:525968032284147733>`).join("\n"))
+                    .addField(`Роли`, shopRoles.map((r, i) => `[${i + 1}] <@&${r.id}> | ${locale(r.coin)} ${emojis.coins}`).join("\n"))
                     .setFooter(`Мобильная версия.`, bot.user.displayAvatarURL())
             ]
             let { clientStatus: userStatus } = message.author.presence;
