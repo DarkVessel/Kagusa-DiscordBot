@@ -37,7 +37,8 @@ if (!fs.existsSync(`./${commandFolder}/`)) {
     fs.readdirSync(`./${commandFolder}`).forEach(folder => {
         try {
             const path = `../${commandFolder}/${folder}`;
-            if (folder.endsWith(".js")) check(require(path), folder, path);
+            const cmd = require(path);
+            if (folder.endsWith(".js")) check(cmd, folder, path);
         } catch (error) {
             sendError(folder, error);
             commandLoadingError++; commandLoading--;
@@ -49,7 +50,8 @@ if (!fs.existsSync(`./${commandFolder}/`)) {
                 .forEach(file => {
                     try {
                         const path = `../${commandFolder}/${folder}/${file}`;
-                        check(require(path), file, path);
+                        const cmd = require(path);
+                        check(cmd, file, path);
                     } catch (err) {
                         sendError(file, error);
                         commandLoadingError++; commandLoading--;

@@ -9,7 +9,7 @@ if (!fs.existsSync("shopRoles.json")) {
         else console.log("Файл shopRoles.json создан!");
     })
 };
-module.exports.run = (bot, message, args, { send, guildRoles }) => {
+module.exports.run = async(bot, message, args, { send, guildRoles }) => {
     if (!fs.existsSync("shopRoles.json")) return send.error("Произошла ошибка, отсутствует файл shopRoles.json!");
 
     const shopRoles = require("../../shopRoles.json");
