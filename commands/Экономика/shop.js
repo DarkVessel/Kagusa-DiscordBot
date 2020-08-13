@@ -52,7 +52,7 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
             const roleS2 = (mention ? shopRoles.find(r => r.id === mention.id) : null) || shopRoles.find(r => r.id === args[1]) || shopRoles[args[1] - 1] || shopRoles.find(r => r.id === a.id);
             if (!args[1]) return send.error("Укажите роль или позицию!");
             if (!roleS2) return send.error("Роль не найдена!");
-            shopRoles.delete(shopRoles.find(r => r.id === roleS.id));
+            shopRoles.delete(shopRoles.find(r => r.id === roleS2.id));
             await db.set(`shopRoles`, shopRoles);
             send.ok(`Роль ${roleS2} была удалена из магазина!`)
             break
