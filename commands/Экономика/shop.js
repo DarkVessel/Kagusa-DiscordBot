@@ -2,18 +2,8 @@ const { prefix, emojis, shopSetAccess } = require("../../config.js");
 const { MessageEmbed } = require("discord.js");
 const { locale } = require("../../tools.js");
 const db = require("quick.db");
-const fs = require("fs");
-if (!fs.existsSync("shopRoles.json")) {
-    fs.appendFile("shopRoles.json", "[]", function (err) {
-        if (err) console.error(`Произошла ошибка при создании файла shopRoles.json!\nСоздайте его вручную и впишите туда: []\nОшибка:\n` + err)
-        else console.log("Файл shopRoles.json создан!");
-    })
-};
 module.exports.run = async(bot, message, args, { send, guildRoles }) => {
-    if (!fs.existsSync("shopRoles.json")) return send.error("Произошла ошибка, отсутствует файл shopRoles.json!");
-
-    const shopRoles = require("../../shopRoles.json");
-
+    const shopRoles = db.fetch("shopRoles") || [];
     const coins = db.fetch(`coins.${message.author.id}`) || 0;
     const role = shopRoles[parseInt(args[1]) - 1];
     if (!args[0]) args[0] = "";
@@ -51,7 +41,7 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
             if (isNaN(args[2])) return send.error("Укажи валидное число!");
             if (args[2] > Number.MAX_SAFE_INTEGER) return send.error(`Цена не может быть больше **\`${locale(Number.MAX_SAFE_INTEGER)}\`**! :0`)
             shopRoles.push({ id: roleS.id, coin: args[2] });
-            await fs.writeFileSync('../../shopRoles.json', JSON.stringify(shopRoles, null, 4));
+            await db.set(`shopRoles`, shopRoles);
             send.ok(`Роль ${roleS} была добавлена в магазин!`)
             break;
         case "delete":
@@ -63,7 +53,7 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
             if (!args[1]) return send.error("Укажите роль или позицию!");
             if (!roleS2) return send.error("Роль не найдена!");
             shopRoles.delete(shopRoles.find(r => r.id === roleS.id));
-            await fs.writeFileSync('../../shopRoles.json', JSON.stringify(shopRoles, null, 4));
+            await db.set(`shopRoles`, shopRoles);
             send.ok(`Роль ${roleS2} была удалена из магазина!`)
             break
         default:
