@@ -35,13 +35,13 @@ if (!fs.existsSync(`./${commandFolder}/`)) {
     if (channel) channel.send(`${emojis.no} | **Команды не были загружены из-за отсутствия папки \`${commandFolder}\`!**`);
 } else {
     fs.readdirSync(`./${commandFolder}`)
-        .filter(file => file.endsWith(".js"))
         .forEach(folder => {
             try {
                 const path = `../${commandFolder}/${folder}`;
                 const cmd = require(path);
                 if (folder.endsWith(".js")) check(cmd, folder, path);
             } catch (error) {
+                if (error.stack.includes("Error: Cannot find module")) return;
                 sendError(folder, error);
                 commandLoadingError++; commandLoading--;
                 console.error(error.stack);
