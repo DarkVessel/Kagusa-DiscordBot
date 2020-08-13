@@ -23,7 +23,7 @@ module.exports.run = (bot, message, args, { send }) => {
         else if (emojis.br.end.some(e => clots.filter(c => c === e).length === 3)) addCoins = args[0] * 5;
     } else wins = 0;
     if (!addCoins) clots = shuffle(emojis.br.end);
-    db.set(`coins.${message.author.id}.tnt`, !addCoins ? coins - args[0] : coins + addCoins);
+    db.set(`coins.${message.author.id}`, !addCoins ? coins - args[0] : coins + addCoins);
     const embed = new MessageEmbed()
         .setColor('YELLOW')
         .setTitle('Крутим барабан-н....')
