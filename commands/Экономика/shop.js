@@ -13,13 +13,13 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
     if (!fs.existsSync("shopRoles.json")) return send.error("Произошла ошибка, отсутствует файл shopRoles.json!");
 
     const shopRoles = require("../../shopRoles.json");
-    if (shopRoles.length === 0) return send.error("В магазине 0 ролей!");
 
     const coins = db.fetch(`coins.${message.author.id}`) || 0;
     const role = shopRoles[parseInt(args[1]) - 1];
     if (!args[0]) args[0] = "";
     switch (args[0].toLowerCase()) {
         case "buy":
+            if (shopRoles.length === 0) return send.error("В магазине 0 ролей!");
             if (args[1] < 1) return send.error("Укажите число больше 0!");
             if (!args[1] || parseInt(args[1]) > shopRoles.length) return send.error(`Укажи номер роли от 1 до ${shopRoles.length}`);
             if (isNaN(args[1])) return send.error("Укажи валидное число.");
@@ -31,6 +31,7 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
             }).catch(() => send.error("При выдачи роли произошла ошибка."))
             break;
         case "sell":
+            if (shopRoles.length === 0) return send.error("В магазине 0 ролей!");
             if (args[1] < 1) return send.error("Укажите число больше 0!");
             if (!args[1] || parseInt(args[1]) > shopRoles.length) return send.error(`Укажи номер роли от 1 до ${shopRoles.length}`);
             if (isNaN(args[1])) return send.error("Укажи валидное число.");
@@ -62,6 +63,7 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
             await fs.writeFileSync('../../shopRoles.json', JSON.stringify(shopRoles, null, 4));
             send.ok(`Роль ${roleS2} была удалена из магазина!`)
         default:
+            if (shopRoles.length === 0) return send.error("В магазине 0 ролей!");
             let positions = "",
                 roles = "",
                 coin = "";
