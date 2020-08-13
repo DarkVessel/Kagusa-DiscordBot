@@ -53,6 +53,7 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
             shopRoles.push({ id: roleS.id, coin: args[2] });
             await fs.writeFileSync('../../shopRoles.json', JSON.stringify(shopRoles, null, 4));
             send.ok(`Роль ${roleS} была добавлена в магазин!`)
+            break;
         case "delete":
             if (!message.member.roles.cache.has(shopSetAccess)) return send.error("У вас недостаточно прав!");
             const mention = message.mentions.roles.first(),
@@ -64,6 +65,7 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
             shopRoles.delete(shopRoles.find(r => r.id === roleS.id));
             await fs.writeFileSync('../../shopRoles.json', JSON.stringify(shopRoles, null, 4));
             send.ok(`Роль ${roleS2} была удалена из магазина!`)
+            break
         default:
             if (shopRoles.length === 0) return send.error("В магазине 0 ролей!");
             let positions = "",
