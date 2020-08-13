@@ -55,12 +55,12 @@ module.exports.run = async(bot, message, args, { send, guildRoles }) => {
             const mention = message.mentions.roles.first(),
                 a = guildRoles.find(r => "@" + r.name === args.slice(1, -1) || r.name === args.slice(1, -1));
 
-            const roleS = (mention ? shopRoles.find(r => r.id === mention.id) : null) || shopRoles.find(r => r.id === args[1]) || shopRoles[args[1] - 1] || shopRoles.find(r => r.id === a.id);
+            const roleS2 = (mention ? shopRoles.find(r => r.id === mention.id) : null) || shopRoles.find(r => r.id === args[1]) || shopRoles[args[1] - 1] || shopRoles.find(r => r.id === a.id);
             if (!args[1]) return send.error("Укажите роль или позицию!");
-            if (!roleS) return send.error("Роль не найдена!");
+            if (!roleS2) return send.error("Роль не найдена!");
             shopRoles.delete(shopRoles.find(r => r.id === roleS.id));
             await fs.writeFileSync('../../shopRoles.json', JSON.stringify(shopRoles, null, 4));
-            send.ok(`Роль ${roleS} была удалена из магазина!`)
+            send.ok(`Роль ${roleS2} была удалена из магазина!`)
         default:
             let positions = "",
                 roles = "",
