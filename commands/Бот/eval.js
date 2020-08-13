@@ -2,6 +2,8 @@ const tools = require("../../tools.js");
 const Discord = require("discord.js");
 const { inspect } = require("util");
 const { MessageEmbed } = Discord;
+const db = require("quick.db");
+const fs = require("fs");
 module.exports.run = async (bot, message, args, data) => {
     try {
         const evaled = await eval(args.join(" "));
