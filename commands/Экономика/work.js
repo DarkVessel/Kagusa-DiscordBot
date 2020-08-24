@@ -35,5 +35,5 @@ module.exports.run = (bot, message, args, { send }) => {
     send.ok(`Вы успешно ${random(texts.ok)}
 
 Вы получили: **${uts(addCoins, "uts_pack.coins")}.**
-Ваш баланс: **${locale(coins.tnt)} монет.**`);
+Ваш баланс: **${locale(coins)} монет.**`);
 };
