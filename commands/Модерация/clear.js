@@ -1,6 +1,7 @@
 const { uts } = require("../../tools.js");
 const config = require("../../config.js");
 module.exports.run = async (bot, message, args, data) => {
+    const { send } = data;
     args = args.filter(e => e != "") // Убираем лишние пробелы.
     if (!data.guildRoles.has(config.clearAccess)) data.channelLog.send("Отсутствует роль clear access.");
     if (!message.member.permissions.has("ADMINISTRATOR") && !data.memberRoles.has(config.clearAccess)) return send.error("У вас недостаточно прав!")
