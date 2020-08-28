@@ -14,19 +14,19 @@ module.exports.run = async (bot, message, args, data) => {
     if (rUser.id === message.author.id) return send.error("Нельзя дать варн самому себе.");
     if (rUser.id === message.guild.owner.id) return send.error("Нельзя дать варн создателю сервера.")
     const position = positionStaff(message.member), positionRuser = positionStaff(rUser);
-    if (positionRuser >= position) return send.error(`Нельзя заварнить человека который ${positionRuser > position ? "выше тебя" : "на ровне с тобой"}.`)
+    if (message.author.id !== message.guild.owner.id && positionRuser >= position) return send.error(`Нельзя заварнить человека который ${positionRuser > position ? "выше тебя" : "на ровне с тобой"}.`)
     if (!muteRole) {
         message.channel.send("Произошла ошибка!");
         data.channelLog.send("Отсутствует роль muted.");
         return;
     }
     if (rUser.roles.cache.has(muteRole.id)) return send.error("Этот участник находиться в муте.")
-    const codes = []; (db.fetch("warns") || {}).array().forEach(e => e.history.forEach(e => codes.push(e.code)));
+    const codes = []; (db.fetch("warns") || {}).array().forEach(e => e.codes.forEach(c => codes.push(c)));
     const user = db.fetch(`warns.${rUser.id}`) || { warns: 0, codes: [] };
     const reason = args.slice(1).join(" ");
     user.warns++;
     user.codes.push(randomCode(codes));
-    let bans;
+    let ban;
     let a = "**`", b = "`**";
     if (config.forbiddenSymbols.some(e => reason.includes(e))) { a = ""; b = "" };
     if (user.warns >= 10) {
@@ -38,7 +38,7 @@ module.exports.run = async (bot, message, args, data) => {
         ).catch(err => err);
         rUser.ban({ reason: "10 предупреждений." });
         db.delete(`warns.${rUser.id}`);
-        bans = true;
+        ban = true;
     } else {
         db.set(`warns.${rUser.id}`, user);
         const timeMute = user.warns === 1 ? 60000 : (user.warns - 1) * 5 * 60000;
@@ -49,5 +49,5 @@ module.exports.run = async (bot, message, args, data) => {
         })
     };
     send.ok(`Вы успешно выдали предупреждение игроку ${rUser}${reason ? ` по причине ${a}${reason}${b}` : ""}`);
-    if (bans) send.ok(`${rUser} был забанен за 10 предупреждений.`);
+    if (ban) send.ok(`${rUser} был забанен за 10 предупреждений.`);
 };
