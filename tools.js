@@ -1,5 +1,6 @@
 const config = require("./config.js");
 const locale = (num = 0) => parseInt(num).toLocaleString().replace(/,/g, " "); // Разделяет число | Пример: 4001294 => 4 001 294.
+const toNum = (text = "") => text.replace(/[^\d]/g, ""); // Получает число из строки | Пример: dj82f1 => 821
 const uts_pack = {
     time: {
         ms: ["миллисекундy", "миллисекунды", "миллисекунд"],
@@ -90,5 +91,5 @@ function shuffle(arr) {
 module.exports = {
     uts, positionStaff, random,
     shuffle, randomCode,
-    duration, locale, 
+    duration, locale, toNum
 };
